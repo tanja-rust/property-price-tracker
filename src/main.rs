@@ -1,3 +1,15 @@
-fn main() {
-    println!("Hello, world!");
+mod app;
+mod config;
+mod cors;
+mod db;
+mod handlers;
+mod in_models;
+mod repositories;
+mod router;
+use anyhow::Result;
+
+#[tokio::main]
+
+async fn main() -> Result<()> {
+    app::run().await
 }

@@ -1,3 +1,12 @@
 target/
 Cargo.lock
 Cargo.lock
+
+.env
+
+**/.DS_Store
+
+.direnv
+
+# vscode project files
+.vscode
