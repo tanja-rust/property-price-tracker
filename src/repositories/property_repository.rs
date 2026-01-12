@@ -45,4 +45,23 @@ impl PropertyRepository {
 
         Ok(property_id)
     }
+
+    pub async fn find_by_id(
+        db: &DatabaseConnection,
+        id: Uuid,
+    ) -> Result<Option<(property_listing::Model, Option<price_snapshot::Model>)>, DbErr> {
+        let property = property_listing::Entity::find_by_id(id).one(db).await?;
+
+        if let Some(property) = property {
+            let latest_price = price_snapshot::Entity::find()
+                .filter(price_snapshot::Column::PropertyId.eq(property.id))
+                .order_by_desc(price_snapshot::Column::SnapshotAt)
+                .one(db)
+                .await?;
+
+            Ok(Some((property, latest_price)))
+        } else {
+            Ok(None)
+        }
+    }
 }
