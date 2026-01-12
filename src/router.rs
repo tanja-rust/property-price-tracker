@@ -1,7 +1,7 @@
 use crate::app::{middleware::check_secret_header, state::AppState};
 use crate::handlers::{
     handler_setup::{health_handler, root_handler},
-    property_handler::create_property,
+    property_handler::{create_property, get_property},
 };
 use axum::{
     Router,
@@ -21,6 +21,7 @@ pub fn build_router(app_state: AppState) -> Router {
     // -----------------------
     let protected_routes = Router::new()
         .route("/api/property", post(create_property))
+        .route("/api/property/{id}", get(get_property))
         .layer(axum::middleware::from_fn_with_state(
             app_state.config.clone(),
             check_secret_header,

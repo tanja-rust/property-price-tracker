@@ -4,6 +4,7 @@ mod cors;
 mod db;
 mod handlers;
 mod in_models;
+mod out_models;
 mod repositories;
 mod router;
 use anyhow::Result;
